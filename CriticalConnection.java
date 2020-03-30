@@ -3,6 +3,10 @@ package com.example.problems;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+//Time Complexity : O(M*N) for BFS
+//Space Complexity : O(M*N)
+//Did this code successfully run on Leetcode : Yes
+//Any problem you faced while coding this : No
 
 public class CriticalConnection {
 	public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {

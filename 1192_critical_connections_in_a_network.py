@@ -6,7 +6,7 @@ class Solution:
     def criticalConnections(self, n: int, connections: List[List[int]]) -> List[List[int]]:
         """
             https://leetcode.com/problems/critical-connections-in-a-network/
-            Time Complexity - O(V+E)
+            Time Complexity - O(V*E)
             Space Complexity - O(V+E)
             'V' -> No of vertices
             'E' -> No of edges

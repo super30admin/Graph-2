@@ -1,3 +1,5 @@
+# the main idea of this solution is to identify a cycle. if the cycle is identified, it is no longer a critical edge.
+# critical edges are identified by comparing the discover id of a node with the lower value of the neighboring node.
 # Time complexity - O(V+E)
 # Space complexity - O(V+E) (graph, recursive stack, result array, lower, discovery)
 # Did this solution run on leetcode? - yes

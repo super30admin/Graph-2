@@ -1,0 +1,52 @@
+Critical Connections in a Network
+#tc: O(V+E)
+#sc: O(V+E)
+class Solution:
+    def criticalConnections(self, n: int, connections: List[List[int]]) -> List[List[int]]:
+        rank = [None] * n
+        lowest_rank = [None] * n
+        g = self.create_graph(connections)
+        critical = []
+        self.dfs(g, 0, None, set(), rank, lowest_rank, critical)
+        return critical
+        
+        
+    def dfs(self, g, curr, parent, vis, rank, lowest_rank, critical):
+        if curr in vis:
+            return
+        vis.add(curr)
+        rank[curr] = len(vis)
+        lowest_rank[curr] = len(vis)
+        for nb in g.get(curr, []):
+            if nb == parent:
+                continue
+            self.dfs(g, nb, curr, vis, rank, lowest_rank, critical)
+            lowest_rank[curr] = min(lowest_rank[curr], lowest_rank[nb])
+            if lowest_rank[nb] > rank[curr]:
+                critical.append([curr, nb])
+
+                    
+    def create_graph(self, connections):
+        g = defaultdict(list)
+        for c in connections:
+            g[c[0]].append(c[1])
+            g[c[1]].append(c[0])       
+        return g
+        
+Minimize Malware Spread
+#tc: O(n)
+#sc: O(n)
+class Solution:
+    def minMalwareSpread(self, graph, initial):
+        def dfs(i):
+            nodes.add(i)
+            for j in range(len(graph[i])):
+                if graph[i][j] and j not in nodes:
+                    dfs(j)
+        rank, initial = collections.defaultdict(list), set(initial)
+        for node in sorted(initial):
+            nodes = set()
+            dfs(node)
+            if nodes & initial == {node}:
+                rank[len(nodes)].append(node)
+        return rank[max(rank)][0] if rank else min(initial)

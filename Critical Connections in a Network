@@ -1,0 +1,46 @@
+from collections import deque
+class Solution:
+    def criticalConnections(self, n: int, connections: List[List[int]]) -> List[List[int]]:
+        neigbor = [ [] for _ in range(n) ]
+        for a,b in connections:
+            neigbor[a].append(b)
+            neigbor[b].append(a)
+        le = [None]*n
+        p = [None]*n
+        le[0] = 0
+        D = deque()
+        D.append(0)
+        while D:
+            c = D.popleft()
+            for b in neigbor[c]:
+                if le[b] is not None:
+                    continue
+                le[b] = le[c]+1
+                D.append(b)
+                p[b] = c
+        assert(all(l is not None for l in le))
+        r = [False]*n
+        for a,b in connections:
+            if p[a]==b or p[b]==a:
+                continue
+            while a!=b:
+                if le[a]>le[b]:
+                    r[a] = True
+                    a = p[a]
+                elif le[a]<le[b]:
+                    r[b] = True
+                    b = p[b]
+                else:
+                    r[a] = True
+                    a = p[a]
+                    r[b] = True
+                    b = p[b]
+        res = []
+        for i in range(1,n):
+            if not r[i]:
+                res.append([i, p[i]])
+        return res
+    
+# Time Complexity: O(mn)
+# Space Complexity: O(m+n)
+# Successfully implemented on Leetcode

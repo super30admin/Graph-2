@@ -1,8 +1,8 @@
 """
 Problem : 1
 
-Time Complexity : O(n)
-Space Complexity : O(n)
+Time Complexity : O(V+E)
+Space Complexity : O(V+E)
 
 Did this code successfully run on Leetcode : Yes
 Any problem you faced while coding this : No

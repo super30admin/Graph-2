@@ -1,0 +1,55 @@
+
+// Time Complexity :O(m*n)
+// Space Complexity :O(m*n)
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+// Your code here along with comments explaining your approach:darjans appraoc-forward dfs
+
+
+class Solution {
+    int time = 0;
+  List<List<Integer>> result = new ArrayList<>();//to add critical connection
+    public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
+        HashMap<Integer, List<Integer>> map = new HashMap<>();//to maintain adjancency list of undirected graph
+        int[] discovery = new int[n];//natural order of node discoverd at time t
+        int[] lowest = new int[n];//it maintains the time  where it reaches least discoverd node 
+        Arrays.fill(discovery, -1);//filling dis with -1
+        Arrays.fill(lowest, -1);//filling dis with -1
+        for (int i = 0; i < connections.size() ; i++) {//each connection mantaining in hashmap
+            List<Integer> con = connections.get(i);
+            Integer in = con.get(0);//in conn
+            Integer out = con.get(1);//out conn 
+            if (!map.containsKey(in)) {
+                map.put(in, new ArrayList<>());
+            }
+            if (!map.containsKey(out)) {
+                map.put(out, new ArrayList<>());
+            }
+            map.get(in).add(out);
+            map.get(out).add(in);
+        }
+        dfs(0, 0, discovery, lowest, map);
+        return result;
+    }
+
+    public void dfs(int v, int u, int[] discovery, int[] lowest, HashMap<Integer, List<Integer>> map) {
+        //base
+        if (discovery[v] != -1)
+            return;
+
+        //logic
+        discovery[v] = time;
+        lowest[v] = time;
+        time++;
+        for (int ne : map.get(v)) {
+            if (ne == u)
+                continue; //as we are doing forward dfs only
+            dfs(ne, v,discovery,lowest,map);
+            if (lowest[ne] > discovery[v]) {
+                result.add(new ArrayList<>(Arrays.asList(v, ne)));//adding critical connection vertices to result as pair
+            }
+            lowest[v] = Math.min(lowest[v], lowest[ne]);//adjusting parent lowest count when recursion unfolding
+        }
+
+    }
+}

@@ -44,6 +44,7 @@ class Solution:
                 self.res.append([u,ne])
             # adjust the lowest of parent for future
             self.lowest[u] = min(self.lowest[u], self.lowest[ne])
+            
 
         
 
